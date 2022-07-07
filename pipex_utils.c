@@ -11,4 +11,8 @@
 /* ************************************************************************** */
 #include "pipex.h"
 
-//check_comands(ac, av);
+void    parents_wait(int id1, int id2, int *p_id)
+{
+    waitpid(id1, 0, NULL);
+	waitpid(id2, 0, NULL);
+}

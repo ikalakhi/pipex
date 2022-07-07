@@ -17,7 +17,7 @@
 	//			dup2()
 	//			close en[0];
 	//			execve(cmd1)
-	//parent ---> cmd2
+	//child2 ---> cmd2
 	//			dup2();
 	//			close end[0];
 	//			execve (cmd2)
@@ -34,5 +34,8 @@ int main(int ac, char **av)
 	id = fork();
 	if (id != 0)
 		execute_cmd1();
-	pipe();
+	id = fork();
+	if (id != 0)
+		execute_cmd1();
+	parents_wait(id1, id2, p_id);
 }
