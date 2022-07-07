@@ -21,6 +21,7 @@
 	//			dup2();
 	//			close end[0];
 	//			execve (cmd2)
+	//parent wait and closeing
 
 int main(int ac, char **av)
 {
