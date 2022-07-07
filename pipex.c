@@ -21,7 +21,7 @@
 	//			dup2();
 	//			close end[0];
 	//			execve (cmd2)
-	//parent wait and closeing
+	//parent wait and closing
 
 int main(int ac, char **av)
 {
@@ -37,6 +37,6 @@ int main(int ac, char **av)
 		execute_cmd1();
 	id = fork();
 	if (id != 0)
-		execute_cmd1();
+		execute_cmd2();
 	parents_wait(id1, id2, p_id);
 }
