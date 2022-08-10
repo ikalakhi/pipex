@@ -23,20 +23,22 @@
 	//			execve (cmd2)
 	//parent wait and closing
 
-int main(int ac, char **av)
+int main(int ac, char **av, char **env)
 {
-	int	id;
-	int	p_id[2];
+	int	id1;
+	int	id2;
+	int	end[2];
 
 	if (ac != 5)
 		return (0);
-	if (pipe(p_id) == -1)
+	if (pipe(end) == -1)
 		return (0);
-	id = fork();
-	if (id != 0)
-		execute_cmd1();
-	id = fork();
-	if (id != 0)
-		execute_cmd2();
-	parents_wait(id1, id2, p_id);
+	id1 = fork();
+	if (id1 == 0)
+		execute_cmd(av, env);
+	id2 = fork();
+	if (id2 == 0)
+		execute_cmd();
+	if (id1 != 0 && id2 != 0)
+		parents_wait(id1, id2, end);
 }
