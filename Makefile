@@ -12,7 +12,7 @@
 
 NAME = pipex
 
-SRC = pipex.c
+SRC = pipex.c pipex_utils.c strjoin.c split.c
 
 OBJS = $(SRC:.c=.o)
 CFLAGS = -Wall -Wextra -Werror

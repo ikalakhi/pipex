@@ -20,7 +20,9 @@
 # include <stdio.h>
 
 void    parents_wait(int id1, int id2, int *p_id);
-void    execute_cmd(char **av, char **en);
+void    execute_cmd(char **av, char **env);
 char    *ft_strjoin(char *s1, char *s2);
+char    **ft_split(char *s, char c);
+size_t  ft_strlen(const char *s);
 
 #endif

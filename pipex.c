@@ -11,17 +11,17 @@
 /* ************************************************************************** */
 #include "pipex.h"
 
-	//pipe
-	//fork
-	//child ---> cmd1
-	//			dup2()
-	//			close en[0];
-	//			execve(cmd1)
-	//child2 ---> cmd2
-	//			dup2();
-	//			close end[0];
-	//			execve (cmd2)
-	//parent wait and closing
+	// pipe
+	// fork
+	// child ---> cmd1
+	// 			dup2()
+	// 			close en[0];
+	// 			execve(cmd1)
+	// child2 ---> cmd2
+	// 			dup2();
+	// 			close end[1];
+	// 			execve (cmd2)
+	// parent wait and closing
 
 int main(int ac, char **av, char **env)
 {
@@ -38,7 +38,7 @@ int main(int ac, char **av, char **env)
 		execute_cmd(av, env);
 	id2 = fork();
 	if (id2 == 0)
-		execute_cmd();
+		execute_cmd(av, env);
 	if (id1 != 0 && id2 != 0)
 		parents_wait(id1, id2, end);
 }
