@@ -70,7 +70,7 @@ char    **ft_loc(char const *s, char **big, char c)
         i++;
         y = k;
     }
-    big[i] = '\0';
+    big[i] = NULL;
     return (big);
 }
 

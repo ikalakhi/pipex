@@ -23,6 +23,32 @@
 	// 			execve (cmd2)
 	// parent wait and closing
 
+void	f_error(int id)
+{
+	if (id == -1)
+	{
+		perror("invalid fork");
+		exit (0);
+	}
+}
+
+void    execute_cmd1(char **av, char **env, int end[2])
+{
+	int		fd;
+    char    *path;
+	char	*args;
+    char    *cmd_path;
+
+    args = args_path(av[2]);
+	cmd_path = check_cmd(args, env);
+	fd = open (av[1], O_RDONLY);
+	if (fd == -1)
+		perror("zsh");
+	
+    if (execve(cmd_path, args, env) == -1)
+		perror("zsh");
+}
+
 int main(int ac, char **av, char **env)
 {
 	int	id1;
@@ -34,11 +60,13 @@ int main(int ac, char **av, char **env)
 	if (pipe(end) == -1)
 		return (0);
 	id1 = fork();
+	f_error(id1);
 	if (id1 == 0)
-		execute_cmd(av, env);
+		execute_cmd1(av, env, end);
 	id2 = fork();
+	f_error(id2);
 	if (id2 == 0)
-		execute_cmd(av, env);
+		execute_cmd2(av, env);
 	if (id1 != 0 && id2 != 0)
 		parents_wait(id1, id2, end);
 }
