@@ -6,17 +6,17 @@
 /*   By: ikalakhi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 12:54:19 by ikalakhi          #+#    #+#             */
-/*   Updated: 2022/08/10 18:14:24 by ikalakhi         ###   ########.fr       */
+/*   Updated: 2022/08/16 14:59:33 by ikalakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
 
-char    *ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	char    *path;
-	size_t  i;
-	size_t  p;
-	
+	char	*path;
+	size_t	i;
+	size_t	p;
+
 	if (!s1 || !s2)
 		return (NULL);
 	path = malloc (sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
@@ -39,26 +39,12 @@ char    *ft_strjoin(char *s1, char *s2)
 	return (path);
 }
 
-size_t  ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
-        size_t  i;
-
-        i = 0;
-        while (s[i] != '\0')
-        {
-                i++;
-        }
-        return (i);
-}
-
-void	ft_print(char *s)
-{
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (s[i] != '\0')
-	{
-		write (1, &s[i], 1);
 		i++;
-	}
+	return (i);
 }

@@ -1,3 +1,7 @@
 {
-    "makefile.extensionOutputFolder": "./.vscode"
+    "makefile.extensionOutputFolder": "./.vscode",
+    "files.associations": {
+        "__config": "c"
+    },
+    "C_Cpp.dimInactiveRegions": false
 }

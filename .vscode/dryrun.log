@@ -1,12 +1,11 @@
 make --dry-run --always-make --keep-going --print-directory
-make: Entering directory `/Users/ikalakhi/Desktop/pipex'
+make: Entering directory `/Users/ikalakhi/Desktop/pipex_ik'
 cc -Wall -Wextra -Werror   -c -o pipex.o pipex.c
- 
 cc -Wall -Wextra -Werror   -c -o pipex_utils.o pipex_utils.c
 cc -Wall -Wextra -Werror   -c -o strjoin.o strjoin.c
 cc -Wall -Wextra -Werror   -c -o split.o split.c
 cc -Wall -Wextra -Werror   -c -o strncmp.o strncmp.c
 cc -Wall -Wextra -Werror   -c -o substr.o substr.c
 cc -Wall -Wextra -Werror pipex.c pipex_utils.c strjoin.c split.c strncmp.c substr.c -o pipex
-make: Leaving directory `/Users/ikalakhi/Desktop/pipex'
+make: Leaving directory `/Users/ikalakhi/Desktop/pipex_ik'
  
