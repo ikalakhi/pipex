@@ -34,6 +34,7 @@ char	*ft_strjoin(char *s1, char *s2);
 char	*check_cmd(char *args, char **env);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 
+int     check_executable(char *args);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 size_t	ft_strlen(const char *s);

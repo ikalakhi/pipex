@@ -17,24 +17,24 @@ void	check_file(char *args, int i)
 	{
 		if (access(args, R_OK) == -1)
 		{
-			perror("zsh : 0");
-			exit(1);
+			perror("zsh");
+			exit(EXIT_FAILURE);
 		}
 	}
 	if (i == 1)
 	{
 		if (access(args, W_OK) == -1)
 		{
-			perror("zsh : 1");
-			exit(1);
+			perror("zsh");
+			exit(EXIT_FAILURE);
 		}
 	}
 	if (i == 2)
 	{
 		if (access(args, F_OK) == -1)
 		{
-			perror("zsh : 2");
-			exit(1);
+			perror("zsh");
+			exit(EXIT_FAILURE);
 		}
 	}
 }
@@ -73,4 +73,11 @@ char	*check_cmd(char *args, char **env)
 	}
 	write(2, "Error: Command not found\n", 25);
 	exit(EXIT_FAILURE);
+}
+
+int	check_executable(char *args)
+{
+	if (access(args, X_OK) == 0)
+		return (0);
+	return (-1);
 }

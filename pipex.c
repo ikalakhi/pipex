@@ -16,14 +16,14 @@ void	f_error(int id)
 	if (id == -1)
 	{
 		perror("invalid fork");
-		exit (0);
+		exit(EXIT_FAILURE);
 	}
 }
 
 void	error(void)
 {
 	perror("zsh");
-	exit(0);
+	exit(EXIT_FAILURE);
 }
 
 void	execute_cmd1(char **av, char **env, int end[2])
@@ -36,8 +36,13 @@ void	execute_cmd1(char **av, char **env, int end[2])
 	check_file(av[1], 2);
 	check_file(av[1], 0);
 	args = ft_split(av[2], ' ');
-	cmd = ft_strjoin("/", args[0]);
-	cmd_path = check_cmd(cmd, env);
+	if (check_executable(args[0]) == 0)
+		cmd_path = args[0];
+	else
+	{
+		cmd = ft_strjoin("/", args[0]);
+		cmd_path = check_cmd(cmd, env);
+	}
 	fd = open (av[1], O_RDONLY);
 	if (fd == -1)
 		error();
@@ -57,14 +62,19 @@ void	execute_cmd2(char **av, char **env, int end[2])
 	char	*cmd_path;
 	char	*cmd;
 
-	fd = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0777);
-	check_file(av[4], 1);
-	check_file(av[4], 2);
+	fd = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd == -1)
 		error();
+	check_file(av[4], 1);
+	check_file(av[4], 2);
 	args = ft_split(av[3], ' ');
-	cmd = ft_strjoin("/", args[0]);
-	cmd_path = check_cmd(cmd, env);
+	if (check_executable(args[0]) == 0)
+		cmd_path = args[0];
+	else
+	{
+		cmd = ft_strjoin("/", args[0]);
+		cmd_path = check_cmd(cmd, env);
+	}
 	close(end[1]);
 	dup2(fd, 1);
 	dup2(end[0], 0);
