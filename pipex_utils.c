@@ -6,7 +6,7 @@
 /*   By: yel-aoun <yel-aoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 20:55:41 by ikalakhi          #+#    #+#             */
-/*   Updated: 2022/08/16 14:48:04 by ikalakhi         ###   ########.fr       */
+/*   Updated: 2022/08/19 18:35:20 by ikalakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
@@ -68,7 +68,11 @@ char	*check_cmd(char *args, char **env)
 	{
 		cmd = ft_strjoin(env_path[i], args);
 		if (access(cmd, X_OK) == 0)
+		{
+			free_pointer(env_path);
 			return (cmd);
+		}
+		free (cmd);
 		i++;
 	}
 	write(2, "Error: Command not found\n", 25);
@@ -80,4 +84,10 @@ int	check_executable(char *args)
 	if (access(args, X_OK) == 0)
 		return (0);
 	return (-1);
+}
+
+void	closing_fd(int end, int fd)
+{
+	close(end);
+	close(fd);
 }

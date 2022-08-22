@@ -39,6 +39,20 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (path);
 }
 
+void	free_pointer(char **pointer)
+{
+	int	i;
+
+	i = 0;
+	while (pointer[i])
+	{
+		if (pointer[i])
+			free(pointer[i]);
+		i++;
+	}
+	free(pointer);
+}
+
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;

@@ -6,24 +6,20 @@
 /*   By: ikalakhi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 14:40:12 by ikalakhi          #+#    #+#             */
-/*   Updated: 2022/08/16 14:45:35 by ikalakhi         ###   ########.fr       */
+/*   Updated: 2022/08/19 18:35:02 by ikalakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
 
-void	f_error(int id)
+char	*join_check_cmd(char *args, char **env)
 {
-	if (id == -1)
-	{
-		perror("invalid fork");
-		exit(EXIT_FAILURE);
-	}
-}
+	char	*cmd;
+	char	*cmd_path;
 
-void	error(void)
-{
-	perror("zsh");
-	exit(EXIT_FAILURE);
+	cmd = ft_strjoin("/", args);
+	cmd_path = check_cmd(cmd, env);
+	free (cmd);
+	return (cmd_path);
 }
 
 void	execute_cmd1(char **av, char **env, int end[2])
@@ -31,7 +27,6 @@ void	execute_cmd1(char **av, char **env, int end[2])
 	int		fd;
 	char	**args;
 	char	*cmd_path;
-	char	*cmd;
 
 	check_file(av[1], 2);
 	check_file(av[1], 0);
@@ -39,19 +34,15 @@ void	execute_cmd1(char **av, char **env, int end[2])
 	if (check_executable(args[0]) == 0)
 		cmd_path = args[0];
 	else
-	{
-		cmd = ft_strjoin("/", args[0]);
-		cmd_path = check_cmd(cmd, env);
-	}
+		cmd_path = join_check_cmd(args[0], env);
 	fd = open (av[1], O_RDONLY);
 	if (fd == -1)
 		error();
 	close(end[0]);
 	dup2(fd, 0);
 	dup2(end[1], 1);
-	close(end[1]);
-	close(fd);
-	if (execve(cmd_path, args, env) == -1)
+	closing_fd(end[0], fd);
+	if (execve(cmd_path, ft_split(av[2], ' '), env) == -1)
 		perror("zsh");
 }
 
@@ -60,7 +51,6 @@ void	execute_cmd2(char **av, char **env, int end[2])
 	int		fd;
 	char	**args;
 	char	*cmd_path;
-	char	*cmd;
 
 	fd = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd == -1)
@@ -71,16 +61,13 @@ void	execute_cmd2(char **av, char **env, int end[2])
 	if (check_executable(args[0]) == 0)
 		cmd_path = args[0];
 	else
-	{
-		cmd = ft_strjoin("/", args[0]);
-		cmd_path = check_cmd(cmd, env);
-	}
+		cmd_path = join_check_cmd(args[0], env);
 	close(end[1]);
 	dup2(fd, 1);
 	dup2(end[0], 0);
-	close(end[0]);
-	close(fd);
-	if (execve(cmd_path, args, env) == -1)
+	closing_fd(end[0], fd);
+	free_pointer(args);
+	if (execve(cmd_path, ft_split(av[3], ' '), env) == -1)
 		perror("zsh");
 }
 
